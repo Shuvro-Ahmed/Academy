@@ -1,0 +1,85 @@
+.model small
+.stack 100h
+.data
+
+X db "Enter first,middle and last initials of your name:$"
+
+.code
+     Main proc
+        ;initialize ds
+        mov AX,@data
+        mov ds, AX
+        ;enter your code here
+        ;task 03
+       
+        lea dx,X
+       
+        mov ah,9
+        int 21h
+ 
+       mov ah,2
+        mov dl,0dh
+        int 21h  
+        mov dl,0ah
+        int 21h
+         
+        mov ah,1
+        int 21h
+        mov bl,al
+
+       mov ah,2
+        mov dl,0dh
+        int 21h  
+        mov dl,0ah
+        int 21h
+       
+        mov ah,1
+        int 21h
+        mov cl,al
+
+       mov ah,2
+        mov dl,0dh
+        int 21h  
+        mov dl,0ah
+        int 21h
+       
+        mov ah,1
+        int 21h
+        mov ch,al
+       
+        mov ah,2
+        mov dl,0dh
+        int 21h  
+        mov dl,0ah
+        int 21h
+       
+        mov dl,ch
+        mov ah,2
+        int 21h
+       
+         mov ah,2
+        mov dl,0dh
+        int 21h  
+        mov dl,0ah
+        int 21h
+       
+        mov dl,cl
+        mov ah,2
+        int 21h
+       
+         mov ah,2
+        mov dl,0dh
+        int 21h  
+        mov dl,0ah
+        int 21h
+       
+        mov dl,bl
+        mov ah,2
+        int 21h
+     
+       
+        ;exit to dos
+        mov AX,4C00H
+        int 21H
+        main ENDP
+     END MAIN
