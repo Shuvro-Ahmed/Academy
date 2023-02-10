@@ -1,0 +1,77 @@
+.model small   
+.stack 100h
+.data
+
+msg1 db 10,13,"Enter Numbers For arr: $"
+msg2 db 10,13,"Sorted : $"
+arr db 5 dup(0)
+ends
+
+.code   
+proc main   
+  
+mov ax, @data 
+mov ds, ax
+
+mov ah,9
+lea dx,msg1
+int 21h
+
+mov cx,5
+mov bx,offset arr
+mov ah,1
+
+INPUT:
+int 21h
+mov [bx],al
+inc bx
+  
+loop INPUT
+
+mov cx,5
+dec cx
+
+CHECK:
+mov bx,cx
+mov si,0
+
+NEXT:
+mov al,arr[si]
+mov dl,arr[si+1]
+cmp al,dl
+
+jc noswap
+
+mov arr[si],dl
+mov arr[si+1],al
+
+noswap:
+inc si
+dec bx
+jnz NEXT
+
+loop CHECK
+
+mov ah,9
+lea dx,msg2
+int 21h
+
+mov cx,5
+mov bx,offset arr
+DISPLAY:
+mov ah,2
+mov dl,[bx]
+int 21h
+inc bx
+  
+mov ah, 2
+mov dl, ' '
+int 21h
+  
+loop DISPLAY   
+
+;exit to dos
+mov ax,4c00H
+int 21H
+main endp
+end main

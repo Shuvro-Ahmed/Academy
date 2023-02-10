@@ -1,0 +1,40 @@
+.MODEL SMALL
+
+.STACK 100H
+
+.DATA
+       
+.CODE
+MAIN PROC
+
+
+MOV AX,@DATA
+MOV DS,AX
+
+
+
+mov bx,0 
+mov ax,1 
+mov dl,1 
+
+loop:
+cmp ax,505  
+jg end:    
+mov cx,ax   
+mul dl      
+add bx,ax   
+neg dl    
+mov ax,cx   
+add ax,2    
+               
+jmp loop:
+
+end:
+mov ax,bx
+
+
+MOV AX,4C00H
+INT 21H
+
+MAIN ENDP
+   END MAIN

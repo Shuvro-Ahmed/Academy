@@ -1,0 +1,103 @@
+.MODEL SMALL
+
+.STACK 100H
+
+.DATA
+m db "N$"  
+n db "Y$"
+a db "1st side:$"  ;
+b db "2nd side:$"  ;
+c db "3rd side:$"  ;
+         
+       
+.CODE
+MAIN PROC
+
+;initizlize DS
+
+MOV AX,@DATA
+MOV DS,AX
+
+; enter your code here
+
+LEA DX,a     
+mov AH,9
+int 21h
+mov ah,1
+int 21h
+sub al,48
+mov bh,al
+
+MOV AH,2     
+MOV DL,0DH
+INT 21H
+MOV DL,0AH
+INT 21H
+
+LEA DX,b       
+mov AH,9
+int 21h
+mov ah,1
+int 21h
+sub al,48
+mov bl,al
+
+MOV AH,2    
+MOV DL,0DH
+INT 21H
+MOV DL,0AH
+INT 21H
+
+LEA DX,c       
+mov AH,9
+int 21h
+mov ah,1
+int 21h
+sub al,48
+mov ch,al 
+
+MOV AH,2     
+MOV DL,0DH
+INT 21H
+MOV DL,0AH
+INT 21H
+
+mov al,bh
+add al,bl
+cmp al,ch      
+jg check:
+jmp not_triangle:
+   
+check:
+mov al,bl
+add al,ch
+cmp al,bh     
+jg check_last:
+jmp not_triangle:
+      
+check_last:
+mov al,ch
+add al,bh      
+cmp al,bl
+jg triangle:
+jmp not_triangle:
+
+triangle:
+LEA DX,n   
+mov AH,9
+int 21h
+jmp end:
+
+not_triangle:
+LEA DX,m     
+mov AH,9
+int 21h
+jmp end: 
+
+end:
+;exit to DOS
+MOV AX,4C00H
+INT 21H
+
+MAIN ENDP
+   END MAIN
